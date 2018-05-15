@@ -1,0 +1,113 @@
+
+  <link rel="stylesheet" href="../../assets/stylesheets/chat.css">
+
+<!--<script src="../../assets/javascripts/chat.js"></script>  -->
+
+
+
+
+
+
+
+
+
+<div class="col-md-12">
+  <div class="group">
+     <% if @group.editable_by?(current_user) %>
+    
+    <%= link_to("Edit", edit_group_path(@group), class: "btn btn-primary pull-right")%>
+     <% end %>
+
+       <% if current_user.present? %>
+     <% if current_user.is_member_of?(@group) %>
+       <%= link_to("Quit Group", quit_group_path(@group), method: :post, class: "btn btn-danger") %>
+     <% else %>
+       <%= link_to("Join Group", join_group_path(@group), method: :post, class: "btn btn-info") %>
+     <% end %>
+   <% end %>
+  </div>
+  <h2><%= @group.title %></h2>
+  <p><%= @group.description %></p>
+  <div id="findID">  <%= @group.id %> </div>
+
+
+
+ <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
+
+      <!-- Messages container -->
+      <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <div id="messages">
+            <span id="message-filler"></span>
+          </div>
+          <form id="message-form" action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <div id="mess">
+              <input class="mdl-textfield__input" type="text" id="message">
+          </div>
+            </div>
+           <button onclick="myFunction()">Click me</button>
+           
+          </form>
+         
+        </div>
+      </div>
+
+     
+
+    </div>
+
+
+
+
+
+
+  
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+<!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
+
+<!-- Add additional services you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-database.js"></script>
+<script>
+  // Initialize Firebase
+
+  var config = {
+    apiKey: "AIzaSyC9jMEm5s0nFui9otHtCbdyh_WODf66uGk",
+    authDomain: "classchat-999ba.firebaseapp.com",
+    databaseURL: "https://classchat-999ba.firebaseio.com",
+    projectId: "classchat-999ba",
+    storageBucket: "classchat-999ba.appspot.com",
+    messagingSenderId: "635459170481"
+  };
+  firebase.initializeApp(config);
+
+    var database = firebase.database();
+function myFunction() {
+
+
+   var number = <%= @Idx %>
+
+   //var text = document.getElementById("")
+  var text = document.getElementById("message").value
+
+ 
+var ary = [];
+
+ary.push(text)
+
+firebase.database().ref('group/' + number).push(ary);
+
+ 
+}
+
+
+
+
+
+
+
+</script>
